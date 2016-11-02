@@ -74,8 +74,13 @@ static const int SubItemWidthHeight = 12;
 static const int SubItemTopPosition = 80;
 
 /**
+ *  九宫格标签起始值
+ */
+static const int ItemTag = 130;
+
+/**
  *  显示用小九宫格标签起始值
  */
-static const int SubItemTag = 30;
+static const int SubItemTag = 230;
 
 #endif /* UIConst_h */

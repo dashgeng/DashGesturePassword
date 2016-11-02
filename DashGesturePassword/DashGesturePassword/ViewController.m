@@ -24,12 +24,16 @@
     [super viewDidLoad];
     
 //    [GesturePasswordManager forgotGesturePassword];
-//    GesturePasswordView *gesturePasswordView = [[GesturePasswordView alloc] initWithFrame:self.view.bounds];
-//    gesturePasswordView.gestureModel = SetPasswordModel;
-//    gesturePasswordView.gesturePasswordBlock = ^(NSString *resultData) {
-//        [self dismissViewControllerAnimated:YES completion:nil];
+//    self.gesturePasswordView = [[GesturePasswordView alloc] initWithFrame:self.view.bounds];
+//    self.gesturePasswordView.gestureModel = SetPasswordModel;
+//    __weak ViewController *weakSelf = self;
+//    self.gesturePasswordView.gesturePasswordBlock = ^(NSString *resultData) {
+//        if ([resultData isEqualToString:PasswordSuccess]) {
+//            [weakSelf.gesturePasswordView removeFromSuperview];
+//        } else {
+//            [weakSelf performSelector:@selector(message:) withObject:nil afterDelay:0.5];
+//        }
 //    };
-//    [self.view addSubview:gesturePasswordView];
     
 
     self.gesturePasswordView = [[GesturePasswordView alloc] initWithFrame:self.view.bounds];
@@ -42,6 +46,7 @@
             [weakSelf performSelector:@selector(message:) withObject:nil afterDelay:0.5];
         }
     };
+    
     [self.view addSubview:self.gesturePasswordView];
 }
 

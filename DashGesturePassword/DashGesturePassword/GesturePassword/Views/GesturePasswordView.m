@@ -14,8 +14,6 @@
 #import "GesturePasswordSubItem.h"
 #import "GesturePasswordManager.h"
 
-#define ITEMTAG 122
-
 @interface GesturePasswordView()
 
 @property (nonatomic, strong) NSMutableArray *pointList;
@@ -204,7 +202,7 @@
         item.userInteractionEnabled = YES;
         item.backgroundColor = [UIColor clearColor];
         item.isSelect = NO;
-        item.tag = ITEMTAG + i;
+        item.tag = ItemTag + i;
         [self addSubview:item];
         
         //NSLog(@"item.frame = [%@]", NSStringFromCGPoint(item.center));
@@ -257,10 +255,10 @@
             GesturePasswordItem *lastItem;
             
             for (GesturePasswordItem *item in self.pointList) {
-                if (item.tag - ITEMTAG == lastTag.intValue) {
+                if (item.tag - ItemTag == lastTag.intValue) {
                     lastP = item.center;
                 }
-                if (item.tag-ITEMTAG == lastTwoTag.intValue) {
+                if (item.tag - ItemTag == lastTwoTag.intValue) {
                     lastTwoP = item.center;
                     lastItem = item;
                 }
@@ -331,7 +329,7 @@
         if (![item isKindOfClass:[GesturePasswordSubItem class]] &&
             [item isKindOfClass:[GesturePasswordItem class]]) {
             [resultData appendString:@"A"];
-            [resultData appendString:[NSString stringWithFormat:@"%ld", (long)item.tag - ITEMTAG]];
+            [resultData appendString:[NSString stringWithFormat:@"%ld", (long)item.tag - ItemTag]];
         }
     }
     
@@ -440,15 +438,16 @@
     } else {
         // 失败
         _validationCount--;
-        if (_validationCount > 0) {
-            self.reminderLabel.text = [NSString stringWithFormat:PasswordErrorCount, _validationCount];
-            self.reminderLabel.textColor = kWrongInfoColor;
-            [self shake:self.reminderLabel];
-            color = kWrongInfoColor;
-        } else {
+        if (_validationCount <= 0) {
+            self.reminderLabel.text = ValidationFailed;
             NSString *resultData = ValidationFailed;
             [self performSelector:@selector(blockAction:) withObject:resultData afterDelay:.8];
+        } else {
+            self.reminderLabel.text = [NSString stringWithFormat:PasswordErrorCount, _validationCount];
         }
+        self.reminderLabel.textColor = kWrongInfoColor;
+        [self shake:self.reminderLabel];
+        color = kWrongInfoColor;
     }
     return color;
 }
