@@ -28,6 +28,10 @@ static NSString * const ResetPassword = @"请再次绘制手势密码";
 static NSString * const PasswordSuccess = @"手势密码设置成功";
 
 /**
+ *  取消手势密码设置
+ */
+static NSString * const CancelOperation = @"取消手势密码设置";
+/**
  *  密码错误，请再次绘制
  */
 static NSString * const PasswordFailed = @"密码错误，请再次绘制";

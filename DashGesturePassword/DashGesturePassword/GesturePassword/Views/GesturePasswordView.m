@@ -384,7 +384,7 @@
         self.reminderLabel.text = PasswordSuccess;
         self.reminderLabel.textColor = [UIColor whiteColor];
         NSString *resultData = PasswordSuccess;
-        [self performSelector:@selector(blockAction:) withObject:resultData afterDelay:.8];
+        [self performSelector:@selector(blockAction:) withObject:resultData afterDelay:.5];
     } else {
         // 失败
         self.reminderLabel.text = PasswordFailed;
@@ -434,14 +434,14 @@
         self.reminderLabel.text = ValidateSuccess;
         self.reminderLabel.textColor = [UIColor whiteColor];
         NSString *resultData = ValidateSuccess;
-        [self performSelector:@selector(blockAction:) withObject:resultData afterDelay:.8];
+        [self performSelector:@selector(blockAction:) withObject:resultData afterDelay:.5];
     } else {
         // 失败
         _validationCount--;
         if (_validationCount <= 0) {
             self.reminderLabel.text = ValidationFailed;
             NSString *resultData = ValidationFailed;
-            [self performSelector:@selector(blockAction:) withObject:resultData afterDelay:.8];
+            [self performSelector:@selector(blockAction:) withObject:resultData afterDelay:.5];
         } else {
             self.reminderLabel.text = [NSString stringWithFormat:PasswordErrorCount, _validationCount];
         }
@@ -518,6 +518,45 @@
         default:
             break;
     }
+}
+
+- (void)addButton {
+    
+    if (_gestureModel == SetPasswordModel) {
+        UIButton *goBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        goBackButton.frame = CGRectMake(0, 0, 64, 64);
+        [goBackButton setTitle:@"返回" forState:UIControlStateNormal];
+        [goBackButton setTitle:@"返回" forState:UIControlStateHighlighted];
+        [goBackButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [goBackButton setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+        [goBackButton addTarget:self action:@selector(cancelSetup) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:goBackButton];
+        
+        UIButton *resetButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        resetButton.frame = CGRectMake(kScreenWidth - 64, 0, 64, 64);
+        [resetButton setTitle:@"重置" forState:UIControlStateNormal];
+        [resetButton setTitle:@"重置" forState:UIControlStateHighlighted];
+        [resetButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [resetButton setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+        [resetButton addTarget:self action:@selector(resetGesturePassword) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:resetButton];
+    }
+}
+
+/**
+ 向调用页面发送取消设置的消息
+ */
+- (void)cancelSetup {
+    [self performSelector:@selector(blockAction:) withObject:CancelOperation afterDelay:0];
+}
+
+/**
+ 重置手势密码并刷新页面
+ */
+- (void)resetGesturePassword {
+    [GesturePasswordManager forgotGesturePassword];
+    self.reminderLabel.textColor = [UIColor whiteColor];
+    self.reminderLabel.text = SetPassword;
 }
 
 @end

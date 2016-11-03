@@ -9,6 +9,14 @@
 #import "GesturePasswordManager.h"
 #import "KeychainItemWrapper.h"
 #import "LocalDataConst.h"
+#import "MessageConst.h"
+#import "GesturePasswordView.h"
+
+@interface GesturePasswordManager ()<UIAlertViewDelegate>
+
+@property (nonatomic, strong) GesturePasswordView *gesturePasswordView;
+
+@end
 
 @implementation GesturePasswordManager
 
@@ -47,7 +55,7 @@
     [keyChain resetKeychainItem];
 }
 
-#pragma mark - GesturePassword Method
+#pragma mark - Private Method
 
 /**
  是否存有手势密码
@@ -61,7 +69,6 @@
         [gesturePasswordValue isKindOfClass:[NSString class]]) {
         return YES;
     }
-    
     return NO;
 }
 
@@ -102,7 +109,6 @@
                [oldGesturePasswordValue isEqualToString:gesturePasswordValue]) {
         return YES;
     }
-    
     return NO;
 }
 
@@ -120,6 +126,55 @@
  */
 + (void)setGesturePassword:(NSString *)gesturePasswordValue {
     [self setObject:gesturePasswordValue forKey:LocalGesturePassword];
+}
+
+#pragma mark - Call GesturePasswordView Method
+
+/**
+ 加载手势密码页面并设置手势密码
+
+ @param viewController 请求加载手势密码页面的视图控制器
+ */
+- (void)setupGesturePassword:(UIViewController *)viewController {
+    [GesturePasswordManager forgotGesturePassword];
+    self.gesturePasswordView = [[GesturePasswordView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.gesturePasswordView.gestureModel = SetPasswordModel;
+    
+    self.gesturePasswordView.gesturePasswordBlock = ^(NSString *resultData) {
+        if ([resultData isEqualToString:PasswordSuccess] ||
+            [resultData isEqualToString:CancelOperation]) {
+            UIView *view = (UIView *)[viewController.view viewWithTag:888];
+            [view removeFromSuperview];
+        }
+    };
+    
+    [self.gesturePasswordView addButton];
+    [self.gesturePasswordView setTag:888];
+    [viewController.view addSubview:self.gesturePasswordView];
+}
+
+/**
+ 验证手势密码
+
+ @param viewController 请求加载的页面控制器
+ */
+- (void)validationGesturePassword:(UIViewController *)viewController {
+    self.gesturePasswordView = [[GesturePasswordView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.gesturePasswordView.gestureModel = ValidatePasswordModel;
+    
+//    __weak GesturePasswordView *weakSelf = (GesturePasswordView *)viewController;
+    self.gesturePasswordView.gesturePasswordBlock = ^(NSString *resultData) {
+        if (![resultData isEqualToString:ValidationFailed]) {
+            UIView *view = (UIView *)[viewController.view viewWithTag:888];
+            [view removeFromSuperview];
+        } else {
+            if ([viewController respondsToSelector:@selector(validationFailedMessage)]) {
+                [viewController performSelector:@selector(validationFailedMessage) withObject:nil afterDelay:0.5];
+            }
+        }
+    };
+    [self.gesturePasswordView setTag:888];
+    [viewController.view addSubview:self.gesturePasswordView];
 }
 
 @end

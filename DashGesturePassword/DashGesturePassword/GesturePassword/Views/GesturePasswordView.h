@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GesturePasswordManager.h"
 
 /*
  * 手势密码的模式
@@ -21,7 +22,7 @@ typedef enum {
 
 typedef void (^PasswordBlock) (NSString *passwordString);
 
-@interface GesturePasswordView : UIView
+@interface GesturePasswordView : UIView 
 /*
  * 手势密码的模式
  */
@@ -31,5 +32,7 @@ typedef void (^PasswordBlock) (NSString *passwordString);
  * 手势密码的回调
  */
 @property (nonatomic, strong) PasswordBlock gesturePasswordBlock;
+
+- (void)addButton;
 
 @end

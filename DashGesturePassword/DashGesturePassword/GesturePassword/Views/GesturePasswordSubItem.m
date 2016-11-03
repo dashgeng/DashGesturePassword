@@ -90,7 +90,7 @@
             UIView *myView = (UIView *)[self viewWithTag:(idx + SubItemTag)];
             [self drawCircle:myView color:color];
             
-            [self performSelector:@selector(drawCleanCircle:) withObject:myView afterDelay:1];
+            [self performSelector:@selector(drawCleanCircle:) withObject:myView afterDelay:2];
         }
     }];
 }

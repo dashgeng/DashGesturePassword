@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "GesturePasswordView.h"
 
 @interface GesturePasswordManager : NSObject
 
@@ -69,5 +71,19 @@
  @param gesturePasswordValue 手势密码的值
  */
 + (void)setGesturePassword:(NSString *)gesturePasswordValue;
+
+/**
+ 加载手势密码页面并设置手势密码
+ 
+ @param viewController 请求加载手势密码页面的视图控制器
+ */
+- (void)setupGesturePassword:(UIViewController *)viewController;
+
+/**
+ 验证手势密码
+ 
+ @param viewController 请求加载的页面控制器
+ */
+- (void)validationGesturePassword:(UIViewController *)viewController;
 
 @end
