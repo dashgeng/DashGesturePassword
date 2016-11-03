@@ -29,7 +29,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="afK-sZ-rfr">
-                                <rect key="frame" x="141" y="337" width="92" height="30"/>
+                                <rect key="frame" x="141" y="376" width="92" height="30"/>
                                 <state key="normal" title="验证手势密码"/>
                                 <connections>
                                     <action selector="valGP:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zjb-v3-AF3"/>
@@ -39,7 +39,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="UnP-TH-5dR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-19.5" id="Mgo-k9-4Dq"/>
-                            <constraint firstItem="afK-sZ-rfr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="18.5" id="jpO-m3-pWE"/>
+                            <constraint firstItem="afK-sZ-rfr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="57.5" id="jpO-m3-pWE"/>
                             <constraint firstItem="afK-sZ-rfr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lR6-j3-347"/>
                             <constraint firstItem="UnP-TH-5dR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wyI-1Q-isz"/>
                         </constraints>

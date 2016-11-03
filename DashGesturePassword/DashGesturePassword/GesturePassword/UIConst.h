@@ -33,6 +33,7 @@ static NSString * const SegueLaunchScreenToTabBar = @"LaunchScreenToTabBar";
  *  手势密码页面的相关常量
  ******************************************************************************/
 
+static NSString * const Position = @"position";
 /**
  *  九宫格中点的外部直径长度
  */

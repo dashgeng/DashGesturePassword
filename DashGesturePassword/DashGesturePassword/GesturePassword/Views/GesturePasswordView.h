@@ -33,6 +33,6 @@ typedef void (^PasswordBlock) (NSString *passwordString);
  */
 @property (nonatomic, strong) PasswordBlock gesturePasswordBlock;
 
-- (void)addButton;
+- (void)addCancelAndResetButton;
 
 @end

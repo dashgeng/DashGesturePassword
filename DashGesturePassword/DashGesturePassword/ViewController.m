@@ -12,24 +12,18 @@
 #import "MessageConst.h"
 #import "MacroConst.h"
 
-@interface ViewController ()<UIAlertViewDelegate> {
-    //GesturePasswordView *gesturePasswordView;
-}
+@interface ViewController ()<UIAlertViewDelegate>
 
-//@property (nonatomic, strong) GesturePasswordView *gesturePasswordView;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)setGP:(id)sender {
@@ -50,6 +44,12 @@
     [alterView show];
 }
 
+/**
+ *  消息对话框的响应处理方法
+ *
+ *  @param alertView   消息对话框的视图
+ *  @param buttonIndex 按钮索引
+ */
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 800) {
         UIView *view = (UIView*)[self.view viewWithTag:888];

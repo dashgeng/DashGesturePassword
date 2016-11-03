@@ -27,7 +27,6 @@
 
 @implementation GesturePasswordView
 
-
 #pragma mark - UIView Methods
 
 /**
@@ -80,21 +79,13 @@
  */
 - (void)initView {
     self.backgroundColor = kGesturePasswordViewBackgroundColor;
-    
-    /****** 上面的9个小点 ******/
     self.subItem.backgroundColor = [UIColor clearColor];
-    
-    /****** 提示文字 ******/
     self.reminderLabel.backgroundColor = [UIColor clearColor];
-    
-    /****** 9个大点的布局 ******/
-    [self createPoint_nine];
-    
-    /****** 小按钮上三角的point ******/
     _lastPoint = CGPointMake(0, 0);
-    
     // 设置验证次数
     _validationCount = 3;
+    
+    [self createNinePoint];
 }
 
 /**
@@ -141,10 +132,6 @@
 #pragma mark - Touch Event
 
 /**
- *  begin
- */
-
-/**
  触摸事件开始
 
  @param touches 触摸
@@ -185,10 +172,9 @@
 #pragma mark - Total Method
 
 /**
- *  下面的9个划线的点   init
+ *  九宫格上的九个点
  */
-- (void)createPoint_nine {
-    
+- (void)createNinePoint {
     for (int i = 0; i < 9; i++) {
         int row    = i / 3;
         int column = i % 3;
@@ -210,10 +196,6 @@
 }
 
 /**
- *  touch  begin move
- */
-
-/**
  触摸开始移动
 
  @param touches 触摸
@@ -223,10 +205,14 @@
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     _movePoint = point;
-    
     return point;
 }
 
+/**
+ 判断是否移动到某个点上并设置状态
+
+ @param point 坐标位置
+ */
 - (void)isContainItem:(CGPoint)point {
     for (GesturePasswordItem *item in self.subviews) {
         if (![item isKindOfClass:[GesturePasswordSubItem class]] &&
@@ -241,6 +227,10 @@
     }
 }
 
+
+/**
+ 绘制时设置三角
+ */
 - (void)touchMoveTriangleAction {
     NSString *resultData = [self getResultPassword];
     if (resultData && resultData.length > 0) {
@@ -253,7 +243,6 @@
             CGPoint lastP = CGPointMake(0.0f, 0.0f);
             CGPoint lastTwoP = CGPointMake(0.0f, 0.0f);
             GesturePasswordItem *lastItem;
-            
             for (GesturePasswordItem *item in self.pointList) {
                 if (item.tag - ItemTag == lastTag.intValue) {
                     lastP = item.center;
@@ -464,16 +453,18 @@
     }
 }
 
-#pragma mark - UILabel  property
+/**
+ 摇动提示信息
 
-- (void)shake:(UIView *)myView {
+ @param infoLabel 视图
+ */
+- (void)shake:(UILabel *)infoLabel {
     int offset = 8 ;
-    
-    CALayer *lbl = [myView layer];
-    CGPoint posLbl = [lbl position];
-    CGPoint y = CGPointMake(posLbl.x-offset, posLbl.y);
-    CGPoint x = CGPointMake(posLbl.x+offset, posLbl.y);
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    CALayer *labelLayer = [infoLabel layer];
+    CGPoint labelPosition = [labelLayer position];
+    CGPoint y = CGPointMake(labelPosition.x - offset, labelPosition.y);
+    CGPoint x = CGPointMake(labelPosition.x + offset, labelPosition.y);
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:Position];
     [animation setTimingFunction:[CAMediaTimingFunction
                                   functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [animation setFromValue:[NSValue valueWithCGPoint:x]];
@@ -481,7 +472,7 @@
     [animation setAutoreverses:YES];
     [animation setDuration:0.06];
     [animation setRepeatCount:2];
-    [lbl addAnimation:animation forKey:nil];
+    [labelLayer addAnimation:animation forKey:nil];
 }
 
 /**
@@ -520,7 +511,10 @@
     }
 }
 
-- (void)addButton {
+/**
+ 添加返回和重置按钮
+ */
+- (void)addCancelAndResetButton {
     
     if (_gestureModel == SetPasswordModel) {
         UIButton *goBackButton = [UIButton buttonWithType:UIButtonTypeCustom];

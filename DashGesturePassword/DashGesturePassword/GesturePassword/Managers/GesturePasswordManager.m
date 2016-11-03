@@ -148,7 +148,7 @@
         }
     };
     
-    [self.gesturePasswordView addButton];
+    [self.gesturePasswordView addCancelAndResetButton];
     [self.gesturePasswordView setTag:888];
     [viewController.view addSubview:self.gesturePasswordView];
 }
